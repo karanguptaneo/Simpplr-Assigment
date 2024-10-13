@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.2
+    container_name: es_container
+    environment:
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+
+  fastapi:
+    build: .
+    container_name: fastapi_container
+    environment:
+      - OPENAI_KEY=${OPENAI_KEY}
+    ports:
+      - "8000:8000"
+    depends_on:
+      - elasticsearch
+
+volumes:
+  es_data:
