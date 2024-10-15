@@ -22,7 +22,7 @@ async def ask_policy(request: QueryRequest):  # Use the Pydantic model
         # Use OpenAI to generate a precise answer based on the retrieved chunks
         answer = qa_service.generate_answer(user_query, relevant_chunks)
 
-    return {"response": answer, "sources": relevant_chunks}
+        return {"response": answer, "sources": relevant_chunks}
 
     except Exception as e:
         print(str(e))
