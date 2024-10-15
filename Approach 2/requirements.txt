@@ -1,0 +1,18 @@
+fastapi==0.115.2
+uvicorn==0.22.0
+pydantic==2.7.4
+langchain
+langchain-community
+langchain-core # ==0.2.19
+langchain-experimental
+# langchain-text-splitters==0.2.2
+neo4j
+openai
+llama-index
+llama-index-graph-stores-neo4j
+# openai[datalib]
+PyMuPDF==1.19.6
+# pytest==7.0.1
+typing-inspect
+typing_extensions
+json-repair
