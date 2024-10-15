@@ -1,9 +1,9 @@
 from services import DocumentHandler
 import os
-
+from elastic_schema import elastic_schema_mapping
 def setup_elasticsearch():
     # Initialize the document handler
-    doc_handler = DocumentHandler(es_host="http://elasticsearch:9200", openai_key=os.getenv("OPENAI_KEY"))
+    doc_handler = DocumentHandler(es_host="http://elasticsearch:9200", openai_key=os.getenv("OPENAI_KEY"), elastic_schema_mapping = elastic_schema_mapping)
     
     # Load and index the policy documents
     chunks = doc_handler.load_documents("./data/policies/")

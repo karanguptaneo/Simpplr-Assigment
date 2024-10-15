@@ -3,15 +3,15 @@ import fitz  # PyMuPDF for reading PDFs
 import openai
 from elasticsearch import Elasticsearch
 from typing import List
-from elastic_schema import elastic_schema_mapping
 
 class DocumentHandler:
     """Handles loading, preprocessing, and indexing of policy documents."""
     
-    def __init__(self, es_host: str, openai_key: str):
+    def __init__(self, es_host: str, openai_key: str, elastic_schema_mapping: dict):
         openai.api_key = openai_key
         self.es = Elasticsearch(es_host)
         self.index_name = "policy_docs_"
+        self.elastic_schema_mapping = elastic_schema_mapping
 
     def load_documents(self, folder_path: str) -> List[str]:
         """Load and extract text from policy PDFs, breaking text into chunks after every 4th line 
@@ -38,7 +38,7 @@ class DocumentHandler:
     def index_documents(self, chunks: List[str]):
         """Index document chunks into Elasticsearch with embeddings."""
         if not self.es.indices.exists(index=self.index_name):
-            self.es.indices.create(index=self.index_name, body=elastic_schema_mapping)
+            self.es.indices.create(index=self.index_name, body=self.elastic_schema_mapping)
 
         for i, chunk in enumerate(chunks):
             embedding = self.get_openai_embedding(chunk)
